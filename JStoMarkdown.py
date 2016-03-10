@@ -25,6 +25,10 @@ code = 0
 
 # Open file via a connection
 file = open(data, 'r')
+
+# Open output markdown file
+output = open(sys.argv[1] + ".md", "w")
+
 for l in file:
         l = l.strip('\n')
         comment_begins  =  re.match(".*[/]+[*]+.*", l)
@@ -36,7 +40,7 @@ for l in file:
 
          # If we are within a comment, print all lines
         if(comment == 1):
-            print l
+            print >> output, l
 
         # If a comment begins, indicate that there is a comment
         if(comment_begins != None):
@@ -49,18 +53,21 @@ for l in file:
         # If a comment has not started and has not ended it means that there is a chunk of code. 
         # Print markdown code label and indicate that code has started
         if(comment == 0 and code == 0):
-            print "\n```js"
+            print >> output, "\n```js"
             code = 1
 
         # If a comment has not started and has not ended it and there is code we want to print all lines
         if(comment == 0 and code):
         	if(l != '' and l != "*/"):
-        	    print l
+        	    print >> output, l
 
         # If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
         # that there is no code anymore.
         if(comment_begins != None and code):
-            print"```"
+            print >> output, "```"
             code = 0
       
 file.close()
+
+if(comment == 0):
+    print >> output, "```",
