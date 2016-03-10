@@ -27,7 +27,8 @@ code = 0
 file = open(data, 'r')
 
 # Open output markdown file
-output = open(sys.argv[1] + ".md", "w")
+filename = sys.argv[1].replace(".js", "")
+output = open(filename + ".md", "w")
 
 for l in file:
         l = l.strip('\n')
