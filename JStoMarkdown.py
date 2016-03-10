@@ -30,6 +30,14 @@ for l in file:
         comment_begins  =  re.match(".*[/]+[*]+.*", l)
         comment_ends  =  re.match(".*[*]+[/]+.*", l)
         
+        # If a comment ends, indicate that a comment has finished
+        if(comment_ends != None):
+            comment = 0
+
+         # If we are within a comment, print all lines
+        if(comment == 1):
+            print l
+
         # If a comment begins, indicate that there is a comment
         if(comment_begins != None):
         	comment = 1
@@ -38,10 +46,6 @@ for l in file:
         if(comment_ends != None):
         	comment = 0
 
-        # If we are within a comment, print all lines
-        if(comment == 1):
-        	print l
-
         # If a comment has not started and has not ended it means that there is a chunk of code. 
         # Print markdown code label and indicate that code has started
         if(comment == 0 and code == 0):
@@ -49,8 +53,8 @@ for l in file:
             code = 1
 
         # If a comment has not started and has not ended it and there is code we want to print all lines
-        if(comment_begins == None and comment_ends == None and code):
-        	if(l != ''):
+        if(comment == 0 and code):
+        	if(l != '' and l != "*/"):
         	    print l
 
         # If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
