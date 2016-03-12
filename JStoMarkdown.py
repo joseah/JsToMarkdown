@@ -15,6 +15,7 @@
 
 # Import "sys" library for managing command parameters
 import sys
+
 # Import "re" library for using regular expressions
 import re
 
@@ -22,6 +23,7 @@ import re
 import pypandoc
 
 data = sys.argv[1] # js file
+output_format = sys.argv[2] # output format
 
 # Flag variables
 comment = 0
@@ -86,9 +88,11 @@ print >> md_file, ''.join(md)
 md_file.close()
 
 # Convert markdown to output format
-output_file = pypandoc.convert(md, 'html', format = "md")
+
+output_file = pypandoc.convert(md, output_format, format = "md", extra_args=['-c style.css'])
+
 
 # Write html output
-output = open(filename + ".html", "w")
+output = open(filename + "." + output_format, "w")
 print >> output, output_file
 output.close()
