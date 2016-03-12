@@ -20,4 +20,7 @@ And optional paramenters:
 python JStoMarkdown.py functions.js html style.css
 ```
 
+## Notes
+
+This script requires `pypandoc` wrapper.
 
