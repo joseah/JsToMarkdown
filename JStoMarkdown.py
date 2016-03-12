@@ -23,13 +23,12 @@ import pypandoc
 
 data = sys.argv[1] # js file
 
+# Flag variables
 comment = 0
 code = 0
 
 # Open output markdown file
 filename = sys.argv[1].replace(".js", "")
-output = open(filename + ".md", "w")
-
 
 md = []
 # Open file via a connection
@@ -78,10 +77,18 @@ file.close()
 if(comment == 0):
     md.append("```")
 
+# Join list of lines
 md = '\n'.join(md)
 
-html = pypandoc.convert(md, 'html', format = "md")
+# Write raw markdown file
+md_file = open(filename + ".md", "w")
+print >> md_file, ''.join(md)
+md_file.close()
 
-x = open(filename + ".html", "w")
-print >> x, html
-x.close()
+# Convert markdown to output format
+output_file = pypandoc.convert(md, 'html', format = "md")
+
+# Write html output
+output = open(filename + ".html", "w")
+print >> output, output_file
+output.close()
