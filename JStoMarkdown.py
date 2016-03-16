@@ -1,16 +1,17 @@
 #!/usr/bin/python
 
-# Title:        Convert .js scripts to markdown
+# Title:        Convert .js scripts to markdown and html
 # Author:       Jose Alquicira Hernandez <alquicirajose at gmail.com>
 # Status:       Active
 # Type: Process
-# Created:      09-Mar-2015
-# Post-History: 
+# Created:      09-Mar-2016
+# Post-History: 16-Mar-2016
 # Python version: 2.6.6
 
 # Parameters:
-# 1st = relationship file (id and region)
-# 2nd = .evec file 
+# 1st = .js file
+# 2nd = .output file format
+# 3rd (Optional)= css file
 
 
 # Import "sys" library for managing command parameters
@@ -19,11 +20,19 @@ import sys
 # Import "re" library for using regular expressions
 import re
 
-# Import pandoc wrapper 
+# Import pandoc wrapper
+
+###############################
+## Install pypandoc via:      #  
+## "sudo pip install pypandoc"#
+###############################
+
 import pypandoc
+
 
 data = sys.argv[1] # js file
 output_format = sys.argv[2] # output format
+css = sys.argv[3] # output format
 
 # Flag variables
 comment = 0
@@ -89,7 +98,7 @@ md_file.close()
 
 # Convert markdown to output format
 
-output_file = pypandoc.convert(md, output_format, format = "md", extra_args=['-c style.css'])
+output_file = pypandoc.convert(md, output_format, format = "md", extra_args=['-c ' + css])
 
 
 # Write html output
