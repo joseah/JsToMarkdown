@@ -17,10 +17,14 @@ And optional paramenters:
 ## Usage example
 
 ```bash
-python JStoMarkdown.py functions.js html style.css
+python JStoMarkdown.py functions.js html kult.css 
 ```
 
 ## Notes
 
-This script requires `pypandoc` wrapper.
+- This script requires `pypandoc` wrapper: Install pypandoc via:
+```bash
+sudo pip install pypandoc
+```
+- See [marked style](http://markedstyle.com/) for more css files
 
