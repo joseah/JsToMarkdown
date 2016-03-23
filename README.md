@@ -6,10 +6,10 @@
 
 `JStoMarkdown.py` receives two mandatory parameters:
 
-- `.js` script (This script should include between comments all markdown notes, see `functions.js`. Code does not have to be commmented)
+- `.js` script (This script should include between comments all markdown notes, see `functions.js`. Code does not have to be commented)
 - output format (html)
 
-And optional paramenters:
+And optional parameters:
 
 - css
 
@@ -22,7 +22,10 @@ python JStoMarkdown.py functions.js html kult.css
 
 ## Notes
 
-- This script requires `pypandoc` wrapper: Install pypandoc via:
+- This script requires `pypandoc` wrapper.
+
+Install pypandoc via:
+
 ```bash
 sudo pip install pypandoc
 ```
