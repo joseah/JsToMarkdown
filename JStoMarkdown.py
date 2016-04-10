@@ -20,6 +20,7 @@ import sys
 # Import "re" library for using regular expressions
 import re
 
+# Import "io" to deal with text enconding
 import io
 
 # Import pandoc wrapper
@@ -31,21 +32,26 @@ import io
 
 import pypandoc
 
+# Import "argparse" to handle command-line arguments
+import argparse
 
-data = sys.argv[1] # js file
-output_format = sys.argv[2] # output format
-css = sys.argv[3] # output format
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument("--data", required=True)
+parser.add_argument("--output_format", required=True)
+parser.add_argument("--css", required=False)
+args = parser.parse_args()
+
 
 # Flag variables
 comment = 0
 code = 0
 
 # Open output markdown file
-filename = sys.argv[1].replace(".js", "")
+filename = args.data.replace(".js", "")
 
 md = []
 # Open file via a connection
-file = open(data, 'r')
+file = open(args.data, 'r')
 for l in file:
         l = l.strip('\n')
         comment_begins  =  re.match(".*[/]+[*]+.*", l)
@@ -100,11 +106,13 @@ md_file.close()
 
 # Convert markdown to output format
 
-output_file = pypandoc.convert(md, output_format, format = "md", extra_args=['-c ' + css])
+if args.css:
+    output_file = pypandoc.convert(md, args.output_format, format = "md", extra_args=['-c ' + args.css])
+else:
+    output_file = pypandoc.convert(md, args.output_format, format = "md")
 
 
 # Write html output
-output = io.open(filename + "." + output_format, "w", encoding='utf8')
-# print >> output, output_file
+output = io.open(filename + "." + args.output_format, "w", encoding='utf8')
 output.write(output_file)
 output.close()
