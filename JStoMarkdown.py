@@ -20,6 +20,8 @@ import sys
 # Import "re" library for using regular expressions
 import re
 
+import io
+
 # Import pandoc wrapper
 
 ###############################
@@ -102,6 +104,7 @@ output_file = pypandoc.convert(md, output_format, format = "md", extra_args=['-c
 
 
 # Write html output
-output = open(filename + "." + output_format, "w")
-print >> output, output_file
+output = io.open(filename + "." + output_format, "w", encoding='utf8')
+# print >> output, output_file
+output.write(output_file)
 output.close()
