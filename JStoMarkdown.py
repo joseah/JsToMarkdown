@@ -107,7 +107,7 @@ md_file.close()
 # Convert markdown to output format
 
 if args.css:
-    output_file = pypandoc.convert(md, args.output_format, format = "md", extra_args=['-c ' + args.css])
+    output_file = pypandoc.convert(md, args.output_format, format = "md", extra_args=['-c ' + args.css, '--toc', '-N'])
 else:
     output_file = pypandoc.convert(md, args.output_format, format = "md")
 
