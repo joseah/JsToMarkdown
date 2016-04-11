@@ -71,6 +71,7 @@ for l in file:
 
         # If a comment ends, indicate that a comment has finished
         if(comment_ends != None):
+            md.append('\n')
             comment = 0
 
         # If a comment has not started and has not ended it means that there is a chunk of code. 
