@@ -94,7 +94,7 @@ for l in file:
       
 file.close()
 
-if(comment == 0):
+if(comment == 0 and code):
     md.append("```")
 
 # Join list of lines
