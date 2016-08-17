@@ -42,3 +42,6 @@ sudo pip install pypandoc
 
 - See [marked style](http://markedstyle.com/) for more css files
 
+## Contributors
+
+- José Alquicira Hernández
