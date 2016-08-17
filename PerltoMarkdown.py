@@ -50,7 +50,6 @@ args = parser.parse_args()
 
 
 #' Flag variables
-comment = 0
 code = 0
 
 #' Open output markdown file
