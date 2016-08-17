@@ -16,7 +16,7 @@
 #' # Usage example
 #'
 #' ```shell
-#' python PerltoMarkdown.py -s example.pl -o html -c kult.css 
+#' python PythontoMarkdown.py -s example.pl -o html -c kult.css 
 #' ```
 #'
 
@@ -84,7 +84,7 @@ for l in file:
 
         if(md_comm == None and code == 0):
             if(l != ''):
-                md.append("\n```perl")
+                md.append("\n```python")
                 code = 1    
 
         #' If a comment has not started, there is code we want to append
