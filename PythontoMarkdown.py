@@ -65,33 +65,45 @@ file = open(args.s, 'r')
 for l in file:
         l = l.strip('\n')
         md_comm =  re.match(".*^[#]{1}[']{1}.*", l)
-        # print(md_comm)
+        comment_begins  =  l.find("'''#")
+        comment_ends  =  l.find("'''")
 
+        # If a comment ends, indicate that a comment has finished
+        if(comment_ends != -1):
+            comment = 0
+
+        # If a comment begins, indicate that there is a comment
+        if(comment_begins != -1):
+            comment = 1
+
+        # If we are within a comment, print all lines
+        if(comment == 1):
+            if l.find("'''#") == -1:
+                 md.append(l)
 
         #' If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
         #' that there is no code anymore.
-        if(md_comm != None and code):
+        if(md_comm != None and code and comment == 0):
             md.append("```\n")
             code = 0
 
         #' If we are within a markdown comment, format line and append
-        if(md_comm):
+        if(md_comm and comment == 0):
             l_format = re.sub("#'\s*", '', l)
             md.append(l_format)
 
         #' If a comment has not started it means that there is a chunk of code. 
         #' Print markdown code label and indicate that code has started
 
-        if(md_comm == None and code == 0):
+        if(md_comm == None and code == 0 and comment == 0):
             if(l != ''):
                 md.append("\n```python")
                 code = 1    
 
         #' If a comment has not started, there is code we want to append
-        if(md_comm == None and code):
+        if(md_comm == None and code and comment == 0):
             if(l != ''):
                 md.append(l)
-
 
       
 file.close()
