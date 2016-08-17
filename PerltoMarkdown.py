@@ -65,8 +65,8 @@ for l in file:
             l_format = re.sub("#'\s*", '', l)
             md.append(l_format)
 
-#         # If a comment has not started it means that there is a chunk of code. 
-#         # Print markdown code label and indicate that code has started
+        # If a comment has not started it means that there is a chunk of code. 
+        # Print markdown code label and indicate that code has started
 
         if(md_comm == None and code == 0):
             if(l != ''):
@@ -78,28 +78,28 @@ for l in file:
             if(l != ''):
                 md.append(l)
 
-#         # If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
-#         # that there is no code anymore.
+        # If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
+        # that there is no code anymore.
         if(md_comm != None and code):
             md.append("```\n")
             code = 0
       
 file.close()
 
-# if(comment == 0 and code):
-#     md.append("```")
+if(md_comm == 0 and code):
+    md.append("```")
 
-# # Join list of lines
+# Join list of lines
 md = '\n'.join(md)
 
 print(md)
 
-# # Write raw markdown file
+# Write raw markdown file
 md_file = open(filename + ".md", "w")
 md_file.write(''.join(md))
 md_file.close()
 
-# # Convert markdown to output format
+# Convert markdown to output format
 
 if args.c:
     output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N'])
@@ -107,7 +107,7 @@ else:
     output_file = pypandoc.convert(md, args.o, format = "md")
 
 
-# # Write html output
+# Write html output
 output = io.open(filename + "." + args.o, "w", encoding='utf8')
 output.write(output_file)
 output.close()
