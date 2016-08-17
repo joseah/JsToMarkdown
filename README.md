@@ -14,11 +14,21 @@ And optional parameters:
 - css
 
 
-## Usage example
+## Usage examples
 
 ```bash
 python JStoMarkdown.py -s js_example.js -o html -c github-markdown.css
 ```
+
+```bash
+python PythontoMarkdown.py -s python_example.py -o html -c github-markdown.css 
+```
+
+```bash
+python PerltoMarkdown.py -s perl_example.pl -o html -c github-markdown.css
+```
+
+
 
 ## Notes
 
