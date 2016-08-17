@@ -52,6 +52,7 @@ args = parser.parse_args()
 #' Flag variables
 comment = 0
 code = 0
+prev = 0
 
 #' Open output markdown file
 filename = args.s.replace(".py", "")
@@ -69,13 +70,14 @@ for l in file:
     comment_ends  =  l.find("'''")
 
     # If a comment ends, indicate that a comment has finished
-    if(comment_ends != -1):
+    if(comment_ends != -1 and prev == 1):
         comment = 0
+        continue
 
     # If a comment begins, indicate that there is a comment
     if(comment_begins != -1):
         comment = 1
-        continue
+        
 
     # If we are within a comment, print all lines
     if(comment == 1):
@@ -106,7 +108,8 @@ for l in file:
         if(l != ''):
             md.append(l)
 
-      
+    prev = comment
+
 file.close()
 
 if(code):
