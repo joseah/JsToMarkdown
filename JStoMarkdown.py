@@ -69,7 +69,7 @@ for l in file:
         if(comment_ends != None):
             comment = 0
 
-        #' If we are within a comment, print all lines
+        #' If we are within a comment, append all lines
         if(comment == 1):
              md.append(l)
 
@@ -79,7 +79,6 @@ for l in file:
 
         #' If a comment ends, indicate that a comment has finished
         if(comment_ends != None):
-            md.append('\n')
             comment = 0
 
         #' If a comment has not started and has not ended it means that there is a chunk of code. 
@@ -89,7 +88,7 @@ for l in file:
                 md.append("\n```js")
                 code = 1
 
-        #' If a comment has not started and has not ended it and there is code we want to print all lines
+        #' If a comment has not started and has not ended it and there is code we want to append all lines
         if(comment == 0 and code):
             if(l != '' and l != "*/"):
                 md.append(l)
