@@ -17,7 +17,7 @@ And optional parameters:
 ## Usage example
 
 ```bash
-python JStoMarkdown.py functions.js html kult.css 
+python JStoMarkdown.py -s example.pl -o html -c kult.css 
 ```
 
 ## Notes
