@@ -2,11 +2,11 @@
 
 ## Description
 
-`JStoMarkdown.py` is a script which creates a markdown and html document using a javascript code file.
+`JStoMarkdown.py`, `PythontoMarkdown.py` and `PerltoMarkdown.py` are scripts which create markdown and html documents using a source code file (`.js`,`.py`, `.pl`).
 
-`JStoMarkdown.py` receives two mandatory parameters:
+All scripts receive two mandatory parameters:
 
-- `.js` script (This script should include between comments all markdown notes, see `functions.js`. Code does not have to be commented)
+- a script (This script should include between comments all markdown notes, see `js_example.js`. Code does not have to be commented)
 - output format (html)
 
 And optional parameters:
@@ -17,17 +17,18 @@ And optional parameters:
 ## Usage example
 
 ```bash
-python JStoMarkdown.py -s example.pl -o html -c kult.css 
+python JStoMarkdown.py -s js_example.js -o html -c github-markdown.css
 ```
 
 ## Notes
 
-- This script requires `pypandoc` wrapper.
+- These scripts requires `pandoc` and `pypandoc` wrapper.
 
-Install pypandoc via:
+Install `pypandoc` via `pip`:
 
 ```bash
 sudo pip install pypandoc
 ```
+
 - See [marked style](http://markedstyle.com/) for more css files
 
