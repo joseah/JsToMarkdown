@@ -52,7 +52,6 @@ args = parser.parse_args()
 #' Flag variables
 comment = 0
 code = 0
-skip = 0
 
 #' Open output markdown file
 filename = args.s.replace(".py", "")
@@ -64,7 +63,6 @@ file = open(args.s, 'r')
 #' Convert script to markdown format 
 
 for l in file:
-    skip = 0
     l = l.strip('\n')
     md_comm =  re.match(".*^[#]{1}[']{1}.*", l)
     comment_begins  =  l.find("'''#")
@@ -74,11 +72,12 @@ for l in file:
     if(comment_ends != -1):
         comment = 0
 
-        # If a comment begins, indicate that there is a comment
+    # If a comment begins, indicate that there is a comment
     if(comment_begins != -1):
-        comment = skip = 1
+        comment = 1
+        continue
 
-        # If we are within a comment, print all lines
+    # If we are within a comment, print all lines
     if(comment == 1):
         if l.find("'''#") == -1:
             md.append(l)
