@@ -60,6 +60,14 @@ for l in file:
         l = l.strip('\n')
         md_comm =  re.match(".*^[#]{1}[']{1}.*", l)
         # print(md_comm)
+
+
+        # If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
+        # that there is no code anymore.
+        if(md_comm != None and code):
+            md.append("```\n")
+            code = 0
+
          # If we are within a markdown comment, format line and append
         if(md_comm):
             l_format = re.sub("#'\s*", '', l)
@@ -70,23 +78,19 @@ for l in file:
 
         if(md_comm == None and code == 0):
             if(l != ''):
-                md.append("```perl")
+                md.append("\n```perl")
                 code = 1    
 
-        # If a comment has not started and has not ended it and there is code we want to print all lines
+        # If a comment has not started, there is code we want to append
         if(md_comm == None and code):
             if(l != ''):
                 md.append(l)
 
-        # If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
-        # that there is no code anymore.
-        if(md_comm != None and code):
-            md.append("```\n")
-            code = 0
+
       
 file.close()
 
-if(md_comm == 0 and code):
+if(code):
     md.append("```")
 
 # Join list of lines
