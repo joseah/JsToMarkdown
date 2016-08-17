@@ -1,17 +1,26 @@
 #!/usr/bin/python
 
-# Title:        Convert .js scripts to markdown and html
-# Author:       Jose Alquicira Hernandez <alquicirajose at gmail.com>
-# Status:       Active
-# Type: Process
-# Created:      09-Mar-2016
-# Post-History: 16-Mar-2016
-# Python version: 2.6.6
+#' ---
+#' title:        javascript2markdown
+#' author:       Jose Alquicira Hernandez
+#' ---
 
-# Parameters:
-# 1st = .js file
-# 2nd = .output file format
-# 3rd (Optional)= css file
+
+
+#' | Parameters |                  Description                  |
+#' |:----------:|:---------------------------------------------:|
+#' | -s         | script file (with comments in markdown style) |
+#' | -o         |              output format (html)             |
+#' | -c         |                    css file                   |
+
+
+#' # Usage example
+#'
+#' ```shell
+#' python JStoMarkdown.py -s functions.js -o html -c kult.css 
+#' ```
+#'
+
 
 
 # Import "sys" library for managing command parameters
@@ -35,23 +44,22 @@ import pypandoc
 # Import "argparse" to handle command-line arguments
 import argparse
 
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument("--data", required=True)
-parser.add_argument("--output_format", required=True)
-parser.add_argument("--css", required=False)
+parser = argparse.ArgumentParser(description='Gets parameters.')
+parser.add_argument("-s", required=True)
+parser.add_argument("-o", required=True)
+parser.add_argument("-c", required=False)
 args = parser.parse_args()
-
 
 # Flag variables
 comment = 0
 code = 0
 
 # Open output markdown file
-filename = args.data.replace(".js", "")
+filename = args.s.replace(".js", "")
 
 md = []
 # Open file via a connection
-file = open(args.data, 'r')
+file = open(args.s, 'r')
 for l in file:
         l = l.strip('\n')
         comment_begins  =  re.match(".*[/]+[*]+.*", l)
@@ -107,13 +115,13 @@ md_file.close()
 
 # Convert markdown to output format
 
-if args.css:
-    output_file = pypandoc.convert(md, args.output_format, format = "md", extra_args=['-c' + args.css, '--toc', '-N'])
+if args.c:
+    output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N'])
 else:
-    output_file = pypandoc.convert(md, args.output_format, format = "md")
+    output_file = pypandoc.convert(md, args.o, format = "md")
 
 
 # Write html output
-output = io.open(filename + "." + args.output_format, "w", encoding='utf8')
+output = io.open(filename + "." + args.o, "w", encoding='utf8')
 output.write(output_file)
 output.close()
