@@ -1,33 +1,33 @@
 #!/usr/bin/python
 
-'''
-Title:        Convert perl scripts to markdown and html
-Author:       Jose Alquicira Hernandez <alquicirajose at gmail.com>
-Status:       Active
-Type: Process
-Created:      09-Mar-2016
-Post-History: 16-Mar-2016
-Python version: 2.6.6
-'''
+#' ---
+#' title:        perl2markdown
+#' author:       Jose Alquicira Hernandez
+#' ---
 
-# Parameters:
-# 1st = .js file
-# 2nd = .output file format
-# 3rd (Optional)= css file
 
-#' Usage example
+#' | Parameters |                  Description                  |
+#' |:----------:|:---------------------------------------------:|
+#' | -s         | script file (with comments in markdown style) |
+#' | -o         |              output format (html)             |
+#' | -c         |                    css file                   |
+
+
+#' # Usage example
 #'
 #' ```shell
-# python PerltoMarkdown.py -s example.pl -o html -c kult.css 
+#' python PerltoMarkdown.py -s example.pl -o html -c kult.css 
 #' ```
+#'
 
-#' Import "sys" library for managing command parameters
+
+#' Import `sys` library for managing command parameters
 import sys
 
-#' Import "re" library for using regular expressions
+#' Import `re` library for using regular expressions
 import re
 
-#' Import "io" to deal with text enconding
+#' Import `io to deal with text enconding
 import io
 
 # Import pandoc wrapper
@@ -39,7 +39,7 @@ import io
 
 import pypandoc
 
-#' Import "argparse" to handle command-line arguments
+#' Import `argparse' to handle command-line arguments
 import argparse
 
 parser = argparse.ArgumentParser(description='Gets parameters.')
@@ -59,6 +59,9 @@ filename = args.s.replace(".pl", "")
 md = []
 #' Open file via a connection
 file = open(args.s, 'r')
+
+#' Convert script to markdown format 
+
 for l in file:
         l = l.strip('\n')
         md_comm =  re.match(".*^[#]{1}[']{1}.*", l)
