@@ -27,7 +27,7 @@ import sys
 #' Import `re` library for using regular expressions
 import re
 
-#' Import `io to deal with text enconding
+#' Import `io` to deal with text enconding
 import io
 
 # Import pandoc wrapper
@@ -39,7 +39,7 @@ import io
 
 import pypandoc
 
-#' Import `argparse' to handle command-line arguments
+#' Import `argparse` to handle command-line arguments
 import argparse
 
 parser = argparse.ArgumentParser(description='Gets parameters.')
