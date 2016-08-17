@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Jose Alquicira Hernandez" />
+  <title>set-region.py</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="github-markdown.css" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">set-region.py</h1>
+<h2 class="author">Jose Alquicira Hernandez</h2>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#usage-example"><span class="toc-section-number">1</span> Usage example</a></li>
+<li><a href="#description"><span class="toc-section-number">2</span> Description</a></li>
+</ul>
+</div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co">#!/usr/bin/python</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Parameters</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1st</td>
+<td align="center">relationship file (id and region)</td>
+</tr>
+<tr class="even">
+<td align="center">2nd</td>
+<td align="center"><code>.evec</code> file</td>
+</tr>
+</tbody>
+</table>
+<h1 id="usage-example"><span class="header-section-number">1</span> Usage example</h1>
+<pre class="shell"><code>python set-region.py genotypes.pop genotypes.evec</code></pre>
+<h1 id="description"><span class="header-section-number">2</span> Description</h1>
+<p>This program takes both relationship and <code>.evec</code> file in order to set regions to each individual and get a tab-separated file</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co">&#39;&#39;&#39;</span>
+<span class="co"># Open file via a connection</span>
+<span class="co">rs = open(data, &#39;r&#39;)</span>
+<span class="co">for l in rs:</span>
+<span class="co">        l = l.rstrip(&#39;\n&#39;)</span>
+<span class="co">        l = l.rsplit(&#39;\t&#39;)</span>
+<span class="co">        eth[l[0]] = l[1] + &#39;\t&#39; + l[2]</span>
+<span class="co">rs.close()</span>
+<span class="co">&#39;&#39;&#39;</span>
+<span class="co"># Import `sys` library for managing command parameters</span>
+<span class="im">import</span> sys
+<span class="co"># Import `sys library for using regular expressions</span>
+<span class="im">import</span> re
+data <span class="op">=</span> sys.argv[<span class="dv">1</span>] <span class="co"># relationship file</span>
+data_2 <span class="op">=</span> sys.argv[<span class="dv">2</span>] <span class="co"># *ind file</span>
+eth <span class="op">=</span> {}
+<span class="co"># Open file via a connection</span>
+rs <span class="op">=</span> <span class="bu">open</span>(data, <span class="st">&#39;r&#39;</span>)
+<span class="cf">for</span> l <span class="op">in</span> rs:
+        l <span class="op">=</span> l.rstrip(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)
+        l <span class="op">=</span> l.rsplit(<span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)
+        eth[l[<span class="dv">0</span>]] <span class="op">=</span> l[<span class="dv">1</span>] <span class="op">+</span> <span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span> <span class="op">+</span> l[<span class="dv">2</span>]
+rs.close()
+rs <span class="op">=</span> <span class="bu">open</span>(data_2, <span class="st">&#39;r&#39;</span>)
+<span class="cf">for</span> l <span class="op">in</span> rs:
+        <span class="cf">if</span> <span class="op">not</span> re.match(<span class="st">&quot;.+#.+&quot;</span>, l):
+                l <span class="op">=</span> l.rstrip(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)
+                <span class="co"># Regular expression for 4 eigenvectors</span>
+                ide <span class="op">=</span> re.findall(<span class="st">&quot;^\s+(\w+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(\W+|\w+)$&quot;</span>, l)
+                ncol <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(ide[<span class="dv">0</span>]))
+                <span class="cf">for</span> i <span class="op">in</span> <span class="bu">xrange</span>(<span class="dv">0</span>,ncol<span class="dv">-1</span>):
+                        <span class="bu">print</span> ide[<span class="dv">0</span>][i] <span class="op">+</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>,
+                request <span class="op">=</span> eth.get(ide[<span class="dv">0</span>][<span class="dv">0</span>],<span class="va">None</span>)
+                <span class="bu">print</span> request
+<span class="co"># Close file connection</span>
+rs.close()</code></pre></div>
+</body>
+</html>
