@@ -94,50 +94,50 @@ for l in file:
     # If code variable is `1` (previous iteration) but there is a comment in current
     # iteration, add markdown tag to end block of code and set code flag variable to `0`  
     if(code and comment):
-        print("```")
+        md.append("```")
         code = 0
 
     # If a comment starts, save those lines
     if(comment == 1):
-        print(l)
+        md.append(l)
 
     # If there is no code and no comment in present iteration, add markdown flag to 
     # start code. Set variable code to `1` to indicate that following lines are code
     if(not code and not comment):
         if(l != ''):
-            print("\n```js")
+            md.append("\n```js")
             code = 1
 
     # If there is code and not a comment, save all code
     if(code and not comment):
         if(l != ''):
-            print(l)   
+            md.append(l)   
      
     
 file.close()
 
 if(comment == 0 and code):
-    # md.append("```")
-    print("```")
-
-# #' Join list of lines
-# md = '\n'.join(md)
-
-# #' Write raw markdown file
-# md_file = open(filename + ".md", "w")
-# md_file.write(''.join(md))
-# md_file.close()
+    md.append("```")
 
 
-# #' # Convert markdown to output format
+#' Join list of lines
+md = '\n'.join(md)
 
-# if args.c:
-#     output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N'])
-# else:
-#     output_file = pypandoc.convert(md, args.o, format = "md")
+#' Write raw markdown file
+md_file = open(filename + ".md", "w")
+md_file.write(''.join(md))
+md_file.close()
 
 
-# #' # Write html output
-# output = io.open(filename + "." + args.o, "w", encoding='utf8')
-# output.write(output_file)
-# output.close()
+#' # Convert markdown to output format
+
+if args.c:
+    output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N'])
+else:
+    output_file = pypandoc.convert(md, args.o, format = "md")
+
+
+#' # Write html output
+output = io.open(filename + "." + args.o, "w", encoding='utf8')
+output.write(output_file)
+output.close()
