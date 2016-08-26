@@ -20,10 +20,6 @@
 #' ```
 #'
 
-
-#' Import `sys` library for managing command parameters
-import sys
-
 #' Import `re` library for using regular expressions
 import re
 
@@ -32,12 +28,13 @@ import io
 
 # Import pandoc wrapper
 
+import pypandoc
 ###############################
 ## Install pypandoc via:      #  
 ## "sudo pip install pypandoc"#
 ###############################
 
-import pypandoc
+
 
 #' Import `argparse` to handle command-line arguments
 import argparse
@@ -49,54 +46,60 @@ parser.add_argument("-c", required=False)
 args = parser.parse_args()
 
 
-#' Flag variables
-code = 0
-
 #' Open output markdown file
 filename = args.s.replace(".sh", "")
 
-md = []
 #' Open file via a connection
 file = open(args.s, 'r')
 
-#' Convert script to markdown format 
-
-for l in file:
-        l = l.strip('\n')
-        md_comm =  re.match(".*^[#]{1}[']{1}.*", l)
-        # print(md_comm)
-
-
-        #' If a comment has started it means that the chunk of code has finished. End chunk of code and indicate
-        #' that there is no code anymore.
-        if(md_comm != None and code):
-            md.append("```\n")
-            code = 0
-
-        #' If we are within a markdown comment, format line and append
-        if(md_comm):
-            l_format = re.sub("#'\s*", '', l)
-            md.append(l_format)
-
-        #' If a comment has not started it means that there is a chunk of code. 
-        #' Print markdown code label and indicate that code has started
-
-        if(md_comm == None and code == 0):
-            if(l != ''):
-                md.append("\n```bash")
-                code = 1    
-
-        #' If a comment has not started, there is code we want to append
-        if(md_comm == None and code):
-            if(l != ''):
-                md.append(l)
-
-
-      
+#' Open file via a connection
+#file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.sh", 'r')
+script = map(str.strip,file.readlines())
 file.close()
 
-if(code):
+
+#' Convert script to markdown format 
+
+md = []
+prev_line = ''
+prev_line_code = False
+
+for l in script:
+      
+    l = l.strip('\n')
+    md_comm = l.find("#'")   
+    
+    # Currrent line is a comment
+    if md_comm != -1:
+        # Previous line was code
+        if prev_line_code:
+            md.append("```")
+        # Previous line was not code
+        l_format = re.sub("#'\s*", '', l)
+        md.append(l_format)
+        
+    # Current line is not a comment        
+    else:
+        # Previous line was not code
+        if not prev_line_code and l != '':
+            md.append("\n```sh")
+            md.append(l)
+        # Previous line was code
+        elif l != '':
+            md.append(l)
+            
+    if md_comm != -1:
+        prev_line_code = False
+    elif l != '':
+        prev_line_code = True
+    
+    prev_line = l
+
+if prev_line_code:
     md.append("```")
+    
+#print(*md,sep="\n")
+
 
 #' Join list of lines
 md = '\n'.join(md)
@@ -109,7 +112,7 @@ md_file.close()
 #' # Convert markdown to output format
 
 if args.c:
-    output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N'])
+    output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone'])
 else:
     output_file = pypandoc.convert(md, args.o, format = "md")
 
