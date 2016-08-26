@@ -51,8 +51,6 @@ filename = args.s.replace(".sh", "")
 
 #' Open file via a connection
 file = open(args.s, 'r')
-
-#' Open file via a connection
 #file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.sh", 'r')
 script = map(str.strip,file.readlines())
 file.close()
