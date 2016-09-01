@@ -33,6 +33,42 @@ md = []
 
 #' Convert script to markdown format 
 
+def format_single_comment(script):
+    md = []
+    prev_line_code = False
+    
+    for l in script:  
+        l = l.strip('\n')
+        md_comm = l.find("#'")   
+        
+        # Currrent line is a comment
+        if md_comm != -1:
+            # Previous line was code
+            if prev_line_code:
+                md.append("```")
+            # Previous line was not code
+            l_format = re.sub("#'\s*", '', l)
+            md.append(l_format)
+            
+        # Current line is not a comment        
+        else:
+            # Previous line was not code
+            if not prev_line_code and l != '':
+                md.append("\n```python")
+                md.append(l)
+            # Previous line was code
+            elif l != '':
+                md.append(l)
+                
+        if md_comm != -1:
+            prev_line_code = False
+        elif l != '':
+            prev_line_code = True
+
+    if prev_line_code:
+        md.append("```")
+    return(md)    
+
 def group(seq, sep):
     g = []
     for el in seq:
@@ -53,33 +89,16 @@ for l in script_split:
         res = [x for x in i[0] if x != "'''#"]
         print(*res, sep="\n")
         res_2 = [x for x in i[1] if  x != "#'''"]
+        res_2 = format_single_comment(res_2)
         print(*res_2, sep="\n")
         
     else:
-        print(*i[0][:-1], sep="\n")
+        i[0] = format_single_comment(i[0])
+        print(*i[0], sep="\n")
 
     
-#' ---
-
-#print(*md,sep="\n")
-
-#md2 = []
-#        
-#for l in md:
-#    if l.find("#'") != -1:
-#        l_format = re.sub("#'\s*", '', l)
-#        md2.extend(l_format)
-#    else:
-#        md2.extend(l)
-#
-#print(md2)
 
 
 
+#format_single_comment(md)
 
-
-#for i,l in enumerate(md):
-#    if l.find("#'") != -1:
-#        md[i] = re.sub("#'\s*", '', l)
-#        
-#print(*md,sep="\n")
