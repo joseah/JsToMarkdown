@@ -29,11 +29,11 @@ file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.py", 
 script = map(str.strip,file.readlines())
 file.close()
 
-md = []
+markdown = []
 
 #' Convert script to markdown format 
 
-def format_single_comment(script):
+def format_single_comment(script, lang):
     md = []
     prev_line_code = False
     
@@ -54,7 +54,7 @@ def format_single_comment(script):
         else:
             # Previous line was not code
             if not prev_line_code and l != '':
-                md.append("\n```python")
+                md.append("\n```" + lang)
                 md.append(l)
             # Previous line was code
             elif l != '':
@@ -80,25 +80,25 @@ def group(seq, sep):
     
 script_split = list(group(script, "'''#"))
 
-#print(*script_split, sep="\n")
 
 for l in script_split:
     i = list(group(l, "#'''"))
 
     if len(i) > 1:
         res = [x for x in i[0] if x != "'''#"]
-        print(*res, sep="\n")
+        #print(*res, sep="\n")
+        markdown.extend(res)
+        
         res_2 = [x for x in i[1] if  x != "#'''"]
-        res_2 = format_single_comment(res_2)
-        print(*res_2, sep="\n")
+        res_2 = format_single_comment(res_2, "python")
+        markdown.extend(res_2)
+        #print(*res_2, sep="\n")
         
     else:
-        i[0] = format_single_comment(i[0])
-        print(*i[0], sep="\n")
+        res_3 = format_single_comment(i[0], "python")
+        markdown.extend(res_3)
+        # print(*i[0], sep="\n")
 
     
 
-
-
-#format_single_comment(md)
-
+#print(*markdown, sep="\n")
