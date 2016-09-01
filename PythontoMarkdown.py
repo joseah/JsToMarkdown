@@ -24,8 +24,6 @@
 import re
 
 
-md = []
-
 #' Open file via a connection
 file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.py", 'r')
 script = map(str.strip,file.readlines())
@@ -46,12 +44,19 @@ def group(seq, sep):
     
 script_split = list(group(script, "'''#"))
 
-for i in script_split:
-    i = list(group(i, "#'''"))
-    
+#print(*script_split, sep="\n")
+
+for l in script_split:
+    i = list(group(l, "#'''"))
+
     if len(i) > 1:
-        res = [x for x in i[0] if x != '' and x != "'''#"]
-        print(res)
+        res = [x for x in i[0] if x != "'''#"]
+        print(*res, sep="\n")
+        res_2 = [x for x in i[1] if  x != "#'''"]
+        print(*res_2, sep="\n")
+        
+    else:
+        print(*i[0][:-1], sep="\n")
 
     
 #' ---
