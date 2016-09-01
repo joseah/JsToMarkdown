@@ -131,6 +131,64 @@ def group(seq, sep):
 
 
 
+'''#
+## format_multiple_line_comment
+
+### Description
+
+This function takes a list where each item corresponds to one single line of 
+the script file. All items are order according to original script.
+
+### Parameters
+
+| Parameters |                  Description                              |
+|:----------:|:---------------------------------------------------------:|
+| script     |     list corresponding to script file                     |
+| lang       | programming language tag: python, perl, shell, javascript |
+| comment_tag_start | Tag to indicate markdown multiple-line comment start(\'\'\'# or /*) |
+| comment_tag_end | Tag to indicate markdown multiple-line comment end #(\'\'\' or */) |
+
+### Usage example 
+
+```python
+format_single_comment(file, "python")
+```
+
+### Output
+
+- `markdown`: a list corresponding to script file with formatted single-line 
+comments, multiple-line comments and code tags added to code chunks.
+
+#'''
+
+
+
+def format_multiple_line_comment(script, lang, 
+                                 comment_tag_start, comment_tag_end):
+
+    markdown = []
+    
+    script_split = group(script, comment_tag_start)
+    
+    for l in script_split:
+        i = list(group(l,comment_tag_end))
+    
+        if len(i) > 1:
+            res = [x for x in i[0] if x != comment_tag_start]
+            markdown.extend(res)
+            
+            res_2 = [x for x in i[1] if  x != comment_tag_end]
+            res_2 = format_single_comment(res_2, lang)
+            markdown.extend(res_2)
+    
+            
+        else:
+            res_3 = format_single_comment(i[0], lang)
+            markdown.extend(res_3)
+    
+    return(markdown)
+    
+
 #' # Code starts
 
 #' ## Import libraries
@@ -138,38 +196,14 @@ def group(seq, sep):
 import re
 
 
-#' Open file via a connection
+#' Open file
 file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.py", 'r')
 script = map(str.strip,file.readlines())
 file.close()
 
-markdown = []
 
 #' Convert script to markdown format 
 
-   
+md_doc= format_multiple_line_comment(script, "python", "'''#", "#'''")
 
-
-    
-script_split = group(script, "'''#")
-
-
-for l in script_split:
-    i = list(group(l, "#'''"))
-
-    if len(i) > 1:
-        res = [x for x in i[0] if x != "'''#"]
-        markdown.extend(res)
-        
-        res_2 = [x for x in i[1] if  x != "#'''"]
-        res_2 = format_single_comment(res_2, "python")
-        markdown.extend(res_2)
-
-        
-    else:
-        res_3 = format_single_comment(i[0], "python")
-        markdown.extend(res_3)
-
-    
-
-print(*markdown, sep="\n")
+print(*md_doc, sep="\n")
