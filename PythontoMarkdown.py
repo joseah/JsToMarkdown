@@ -16,7 +16,7 @@
 #' # Usage example
 #'
 #' ```shell
-#' python PythontoMarkdown.py -s example.pl -o html -c kult.css 
+#' python PythontoMarkdown.py -s example.py -o html -c kult.css 
 #' ```
 #'
 
@@ -193,11 +193,35 @@ def format_multiple_line_comment(script, lang,
 
 #' ## Import libraries
 
+#' Import `re` to use regular expressions
+
 import re
+
+#' Import `argparse` to handle command-line arguments
+import argparse
+
+#' Import `io` to deal with text enconding
+import io
+
+# Import pandoc wrapper
+import pypandoc
+
+
+parser = argparse.ArgumentParser(description='Gets parameters.')
+parser.add_argument("-s", required=True)
+parser.add_argument("-o", required=True)
+parser.add_argument("-c", required=False)
+args = parser.parse_args()
+
+
+#' Open output markdown file
+filename = args.s.replace(".py", "")
+
 
 
 #' Open file
-file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.py", 'r')
+file = open(args.s, 'r')
+#file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.py", 'r')
 script = map(str.strip,file.readlines())
 file.close()
 
@@ -206,4 +230,24 @@ file.close()
 
 md_doc= format_multiple_line_comment(script, "python", "'''#", "#'''")
 
-print(*md_doc, sep="\n")
+
+#' Join list of lines
+md = '\n'.join(md_doc)
+
+#' Write raw markdown file
+md_file = open(filename + ".md", "w")
+md_file.write(''.join(md))
+md_file.close()
+
+#' # Convert markdown to output format
+
+if args.c:
+    output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone'])
+else:
+    output_file = pypandoc.convert(md, args.o, format = "md")
+
+
+#' # Write html output
+output = io.open(filename + "." + args.o, "w", encoding='utf8')
+output.write(output_file)
+output.close()
