@@ -125,7 +125,7 @@ script_split = group(script, "\'\'\'#")
 def group(seq, sep):
     g = []
     for el in seq:
-        if el == sep:
+        if re.match(sep, el) != None :
             yield g
             g = []
         g.append(el)
@@ -139,7 +139,7 @@ def group(seq, sep):
 ### Description
 
 This function takes a list where each item corresponds to one single line of 
-the script file. All items are order according to original script.
+the script file. All items are ordered according to original script.
 
 ### Parameters
 
@@ -170,18 +170,17 @@ def format_multiple_line_comment(script, lang,
 
     markdown = []
     script_split = group(script, comment_tag_start)
-    
+
     for l in script_split:
         i = list(group(l,comment_tag_end))
-    
         if len(i) > 1:
-            res = [x for x in i[0] if x != comment_tag_start]
+            res = [re.sub("^\s*", '', x).rstrip("\n") for x in i[0] if re.match(comment_tag_start, x) == None ]
             markdown.extend(res)
+
             
-            res_2 = [x for x in i[1] if  x != comment_tag_end]
+            res_2 = [x for x in i[1] if  re.match(comment_tag_end, x) == None]
             res_2 = format_single_comment(res_2, lang)
             markdown.extend(res_2)
-    
             
         else:
             res_3 = format_single_comment(i[0], lang)
