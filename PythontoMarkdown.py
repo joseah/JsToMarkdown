@@ -56,18 +56,20 @@ def format_single_comment(script, lang):
     md = []
     prev_line_code = False
     
-    for l in script:  
+    for l in script:
         l = l.strip('\n')
-        md_comm = l.find("#'")   
+        md_comm = re.match("#'", l)
         
         # Currrent line is a comment
-        if md_comm != -1:
+        if md_comm != None:
             # Previous line was code
             if prev_line_code:
-                md.append("```")
+                md.append("```\n")
             # Previous line was not code
-            l_format = re.sub("#'\s*", '', l)
-            md.append(l_format)
+                
+            if l != '':
+                l_format = re.sub("#'\s*", '', l)
+                md.append(l_format)
             
         # Current line is not a comment        
         else:
@@ -79,7 +81,7 @@ def format_single_comment(script, lang):
             elif l != '':
                 md.append(l)
                 
-        if md_comm != -1:
+        if md_comm != None:
             prev_line_code = False
         elif l != '':
             prev_line_code = True
@@ -146,7 +148,7 @@ the script file. All items are order according to original script.
 | script     |     list corresponding to script file                     |
 | lang       | programming language tag: python, perl, shell, javascript |
 | comment_tag_start | Tag to indicate markdown multiple-line comment start(\'\'\'# or /*) |
-| comment_tag_end | Tag to indicate markdown multiple-line comment end #(\'\'\' or */) |
+| comment_tag_end | Tag to indicate markdown multiple-line comment end (#\'\'\' or */) |
 
 ### Usage example 
 
@@ -167,7 +169,6 @@ def format_multiple_line_comment(script, lang,
                                  comment_tag_start, comment_tag_end):
 
     markdown = []
-    
     script_split = group(script, comment_tag_start)
     
     for l in script_split:
@@ -203,8 +204,12 @@ import argparse
 #' Import `io` to deal with text enconding
 import io
 
-# Import pandoc wrapper
+#' Import pandoc wrapper
 import pypandoc
+
+#' Set path to pandoc
+import os
+os.environ.setdefault('PYPANDOC_PANDOC', '/usr/local/bin/pandoc')
 
 
 parser = argparse.ArgumentParser(description='Gets parameters.')
@@ -222,12 +227,11 @@ filename = args.s.replace(".py", "")
 #' Open file
 file = open(args.s, 'r')
 #file = open("/Users/joseah/Documents/lab_collado/github/SrcToMarkdown/test.py", 'r')
-script = map(str.strip,file.readlines())
+script = file.readlines()
 file.close()
 
 
 #' Convert script to markdown format 
-
 md_doc= format_multiple_line_comment(script, "python", "'''#", "#'''")
 
 
@@ -242,9 +246,9 @@ md_file.close()
 #' # Convert markdown to output format
 
 if args.c:
-    output_file = pypandoc.convert(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone'])
+    output_file = pypandoc.convert_text(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone'])
 else:
-    output_file = pypandoc.convert(md, args.o, format = "md")
+    output_file = pypandoc.convert_text(md, args.o, format = "md")
 
 
 #' # Write html output
