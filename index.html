@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Src2Markdown by joseah</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Src2Markdown</h1>
+        <h2>Create markdown reports from scripts</h2>
+        <a href="https://github.com/joseah/SrcToMarkdown" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h1>
+
+<p>This program takes a script written in <strong>python</strong>, <strong>perl</strong>, <strong>javascript</strong>, <strong>R</strong> or <strong>shell</strong>
+and generates a markdown document with comments processed as markdown and code embedded in
+markdown code tags.</p>
+
+<h1>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
+
+<h2>
+<a id="pandoc" class="anchor" href="#pandoc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pandoc</h2>
+
+<p>This program requires <a href="http://pandoc.org/">Pandoc</a> to convert the markdown output generated
+with this program to any other format.</p>
+
+<p>Download Pandoc from the <a href="http://pandoc.org/installing.html">installing webpage</a>. </p>
+
+<h2>
+<a id="pypandoc" class="anchor" href="#pypandoc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pypandoc</h2>
+
+<p>In order to use pandoc within python, pypandoc wrapper is required.</p>
+
+<p>Install <code>pypandoc</code> via <code>pip</code>:</p>
+
+<div class="highlight highlight-source-shell"><pre>sudo pip install pypandoc</pre></div>
+
+<blockquote>
+<p>See <a href="https://pip.pypa.io/en/stable/installing/">pip webpage</a> if you do not use <code>pip</code> yet</p>
+</blockquote>
+
+<h1>
+<a id="parameter-description" class="anchor" href="#parameter-description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parameter description</h1>
+
+<table>
+<thead>
+<tr>
+<th align="center">Parameters</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">-s</td>
+<td align="center">script file (with comments in markdown style)</td>
+</tr>
+<tr>
+<td align="center">-o</td>
+<td align="center">output format (html)</td>
+</tr>
+<tr>
+<td align="center">-c</td>
+<td align="center">css file</td>
+</tr>
+</tbody>
+</table>
+
+<h1>
+<a id="usage-example" class="anchor" href="#usage-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage example</h1>
+
+<div class="highlight highlight-source-shell"><pre>python SrctoMarkdown.py -s functions.js -o html -c kult.css </pre></div>
+
+<h1>
+<a id="define-functions" class="anchor" href="#define-functions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Define functions</h1>
+
+<h2>
+<a id="format_single_comment" class="anchor" href="#format_single_comment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>format_single_comment</h2>
+
+<h3>
+<a id="description-1" class="anchor" href="#description-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h3>
+
+<p>This function takes a list where each item corresponds to one single line of 
+the script file. All items are order according to original script.</p>
+
+<h3>
+<a id="parameters" class="anchor" href="#parameters" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parameters</h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">Parameters</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">script</td>
+<td align="center">list corresponding to script file</td>
+</tr>
+<tr>
+<td align="center">lang</td>
+<td align="center">programming language tag: python, perl, shell, javascript</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="usage-example-1" class="anchor" href="#usage-example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage example</h3>
+
+<div class="highlight highlight-source-python"><pre>format_single_comment(<span class="pl-v">file</span>, <span class="pl-s"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>)</pre></div>
+
+<h3>
+<a id="output" class="anchor" href="#output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Output</h3>
+
+<ul>
+<li>
+<code>md</code>: a list corresponding to script file with formatted single-line comments 
+and code tags added to code chunks.</li>
+</ul>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">def</span> <span class="pl-en">format_single_comment</span>(<span class="pl-smi">script</span>, <span class="pl-smi">lang</span>):
+    md <span class="pl-k">=</span> []
+    prev_line_code <span class="pl-k">=</span> <span class="pl-c1">False</span>
+
+    <span class="pl-k">for</span> l <span class="pl-k">in</span> script:
+        l <span class="pl-k">=</span> l.strip(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
+        md_comm <span class="pl-k">=</span> re.match(<span class="pl-s"><span class="pl-pds">"</span>#'<span class="pl-pds">"</span></span>, l)
+
+        <span class="pl-c"># Currrent line is a comment</span>
+        <span class="pl-k">if</span> md_comm <span class="pl-k">!=</span> <span class="pl-c1">None</span>:
+            <span class="pl-c"># Previous line was code</span>
+            <span class="pl-k">if</span> prev_line_code:
+                md.append(<span class="pl-s"><span class="pl-pds">"</span>```<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>)
+            <span class="pl-c"># Previous line was not code</span>
+            <span class="pl-k">if</span> l <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>:
+                l_format <span class="pl-k">=</span> re.sub(<span class="pl-s"><span class="pl-pds">"</span>#'\s*<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, l)
+                md.append(l_format)
+
+        <span class="pl-c"># Current line is not a comment        </span>
+        <span class="pl-k">else</span>:
+            <span class="pl-c"># Previous line was not code</span>
+            <span class="pl-k">if</span> <span class="pl-k">not</span> prev_line_code <span class="pl-k">and</span> l <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>:
+                md.append(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>```<span class="pl-pds">"</span></span> <span class="pl-k">+</span> lang)
+                md.append(l)
+            <span class="pl-c"># Previous line was code</span>
+            <span class="pl-k">elif</span> l <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>:
+                md.append(l)
+
+        <span class="pl-k">if</span> md_comm <span class="pl-k">!=</span> <span class="pl-c1">None</span>:
+            prev_line_code <span class="pl-k">=</span> <span class="pl-c1">False</span>
+        <span class="pl-k">elif</span> l <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>:
+            prev_line_code <span class="pl-k">=</span> <span class="pl-c1">True</span>
+    <span class="pl-k">if</span> prev_line_code:
+        md.append(<span class="pl-s"><span class="pl-pds">"</span>```<span class="pl-pds">"</span></span>)
+    <span class="pl-k">return</span>(md) </pre></div>
+
+<hr>
+
+<h2>
+<a id="group" class="anchor" href="#group" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>group</h2>
+
+<h3>
+<a id="description-2" class="anchor" href="#description-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h3>
+
+<p>Splits a list according to a string pattern.</p>
+
+<h3>
+<a id="parameters-1" class="anchor" href="#parameters-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parameters</h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">Parameters</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">seq</td>
+<td align="center">list corresponding to script file</td>
+</tr>
+<tr>
+<td align="center">sep</td>
+<td align="center">pattern used to split the list</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="usage-example-2" class="anchor" href="#usage-example-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage example</h3>
+
+<div class="highlight highlight-source-python"><pre>script_split <span class="pl-k">=</span> group(script, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\'</span>''#<span class="pl-pds">"</span></span>)</pre></div>
+
+<h3>
+<a id="output-1" class="anchor" href="#output-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Output</h3>
+
+<ul>
+<li>
+<code>g</code>: a list of lists separated by provided string pattern</li>
+</ul>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">def</span> <span class="pl-en">group</span>(<span class="pl-smi">seq</span>, <span class="pl-smi">sep</span>):
+    g <span class="pl-k">=</span> []
+    <span class="pl-k">for</span> el <span class="pl-k">in</span> seq:
+        <span class="pl-k">if</span> re.match(sep, el) <span class="pl-k">!=</span> <span class="pl-c1">None</span> :
+            <span class="pl-k">yield</span> g
+            g <span class="pl-k">=</span> []
+        g.append(el)
+    <span class="pl-k">yield</span> <span class="pl-c1">list</span>(g)</pre></div>
+
+<h2>
+<a id="format_multiple_line_comment" class="anchor" href="#format_multiple_line_comment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>format_multiple_line_comment</h2>
+
+<h3>
+<a id="description-3" class="anchor" href="#description-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h3>
+
+<p>This function takes a list where each item corresponds to one single line of 
+the script file. All items are ordered according to original script.</p>
+
+<h3>
+<a id="parameters-2" class="anchor" href="#parameters-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parameters</h3>
+
+<table>
+<thead>
+<tr>
+<th align="center">Parameters</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">script</td>
+<td align="center">list corresponding to script file</td>
+</tr>
+<tr>
+<td align="center">lang</td>
+<td align="center">programming language tag: python, perl, shell, javascript</td>
+</tr>
+<tr>
+<td align="center">comment_tag_start</td>
+<td align="center">Tag to indicate markdown multiple-line comment start(\'\'\'# or /*)</td>
+</tr>
+<tr>
+<td align="center">comment_tag_end</td>
+<td align="center">Tag to indicate markdown multiple-line comment end (#\'\'\' or */)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="usage-example-3" class="anchor" href="#usage-example-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage example</h3>
+
+<div class="highlight highlight-source-python"><pre>format_single_comment(<span class="pl-v">file</span>, <span class="pl-s"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>)</pre></div>
+
+<h3>
+<a id="output-2" class="anchor" href="#output-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Output</h3>
+
+<ul>
+<li>
+<code>markdown</code>: a list corresponding to script file with formatted single-line 
+comments, multiple-line comments and code tags added to code chunks.</li>
+</ul>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">def</span> <span class="pl-en">format_multiple_line_comment</span>(<span class="pl-smi">script</span>, <span class="pl-smi">lang</span>, 
+                                 <span class="pl-smi">comment_tag_start</span>, <span class="pl-smi">comment_tag_end</span>):
+    markdown <span class="pl-k">=</span> []
+    script_split <span class="pl-k">=</span> group(script, comment_tag_start)
+    <span class="pl-k">for</span> l <span class="pl-k">in</span> script_split:
+        i <span class="pl-k">=</span> <span class="pl-c1">list</span>(group(l,comment_tag_end))
+        <span class="pl-k">if</span> <span class="pl-c1">len</span>(i) <span class="pl-k">&gt;</span> <span class="pl-c1">1</span>:
+            res <span class="pl-k">=</span> [re.sub(<span class="pl-s"><span class="pl-pds">"</span>^\s*<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, x).rstrip(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>) <span class="pl-k">for</span> x <span class="pl-k">in</span> i[<span class="pl-c1">0</span>] <span class="pl-k">if</span> re.match(comment_tag_start, x) <span class="pl-k">==</span> <span class="pl-c1">None</span> ]
+            markdown.extend(res)
+
+            res_2 <span class="pl-k">=</span> [x <span class="pl-k">for</span> x <span class="pl-k">in</span> i[<span class="pl-c1">1</span>] <span class="pl-k">if</span>  re.match(comment_tag_end, x) <span class="pl-k">==</span> <span class="pl-c1">None</span>]
+            res_2 <span class="pl-k">=</span> format_single_comment(res_2, lang)
+            markdown.extend(res_2)
+
+        <span class="pl-k">else</span>:
+            res_3 <span class="pl-k">=</span> format_single_comment(i[<span class="pl-c1">0</span>], lang)
+            markdown.extend(res_3)
+
+    <span class="pl-k">return</span>(markdown)
+</pre></div>
+
+<h1>
+<a id="code-starts" class="anchor" href="#code-starts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code starts</h1>
+
+<h2>
+<a id="import-libraries" class="anchor" href="#import-libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Import libraries</h2>
+
+<p>Import <code>re</code> to use regular expressions</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> re</pre></div>
+
+<p>Import <code>argparse</code> to handle command-line arguments</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> argparse</pre></div>
+
+<p>Import <code>io</code> to deal with text enconding</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> io</pre></div>
+
+<p>Import pandoc wrapper</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> pypandoc</pre></div>
+
+<p>Set path to pandoc</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> os
+os.environ.setdefault(<span class="pl-s"><span class="pl-pds">'</span>PYPANDOC_PANDOC<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/usr/local/bin/pandoc<span class="pl-pds">'</span></span>)</pre></div>
+
+<p>Get parameters </p>
+
+<div class="highlight highlight-source-python"><pre>parser <span class="pl-k">=</span> argparse.ArgumentParser(<span class="pl-v">description</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>Gets parameters.<span class="pl-pds">'</span></span>)
+parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-s<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">True</span>)
+parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-o<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">True</span>)
+parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-c<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+args <span class="pl-k">=</span> parser.parse_args()</pre></div>
+
+<p>Open output markdown file</p>
+
+<div class="highlight highlight-source-python"><pre>script_info <span class="pl-k">=</span> args.s.split(<span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>)
+filename <span class="pl-k">=</span> script_info[<span class="pl-c1">0</span>]
+extension <span class="pl-k">=</span> script_info[<span class="pl-c1">1</span>]</pre></div>
+
+<p>Open file</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-v">file</span> <span class="pl-k">=</span> <span class="pl-c1">open</span>(args.s, <span class="pl-s"><span class="pl-pds">'</span>r<span class="pl-pds">'</span></span>)
+script <span class="pl-k">=</span> <span class="pl-v">file</span>.readlines()
+<span class="pl-v">file</span>.close()</pre></div>
+
+<p>Convert script to markdown format </p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>pl<span class="pl-pds">"</span></span> <span class="pl-k">or</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>sh<span class="pl-pds">"</span></span> <span class="pl-k">or</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>R<span class="pl-pds">"</span></span> :
+    md_doc <span class="pl-k">=</span> format_single_comment(script, extension)
+<span class="pl-k">elif</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>py<span class="pl-pds">"</span></span>:
+    md_doc <span class="pl-k">=</span> format_multiple_line_comment(script, <span class="pl-s"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>'''#<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>#'''<span class="pl-pds">"</span></span>)
+<span class="pl-k">elif</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>js<span class="pl-pds">"</span></span>:
+    md_doc <span class="pl-k">=</span> format_multiple_line_comment(script, <span class="pl-s"><span class="pl-pds">"</span>js<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/**<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>**/<span class="pl-pds">"</span></span>)</pre></div>
+
+<p>Join list of lines</p>
+
+<div class="highlight highlight-source-python"><pre>md <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>.join(md_doc)</pre></div>
+
+<p>Write raw markdown file</p>
+
+<div class="highlight highlight-source-python"><pre>md_file <span class="pl-k">=</span> <span class="pl-c1">open</span>(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.md<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>w<span class="pl-pds">"</span></span>)
+md_file.write(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>.join(md))
+md_file.close()</pre></div>
+
+<h1>
+<a id="convert-markdown-to-output-format" class="anchor" href="#convert-markdown-to-output-format" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Convert markdown to output format</h1>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> args.c:
+    output_file <span class="pl-k">=</span> pypandoc.convert_text(md, args.o, <span class="pl-v">format</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>md<span class="pl-pds">"</span></span>, <span class="pl-v">extra_args</span><span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">'</span>-c<span class="pl-pds">'</span></span> <span class="pl-k">+</span> args.c, <span class="pl-s"><span class="pl-pds">'</span>--toc<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>-N<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>--self-contained<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>--standalone<span class="pl-pds">'</span></span>])
+<span class="pl-k">else</span>:
+    output_file <span class="pl-k">=</span> pypandoc.convert_text(md, args.o, <span class="pl-v">format</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>md<span class="pl-pds">"</span></span>)</pre></div>
+
+<h1>
+<a id="write-html-output" class="anchor" href="#write-html-output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Write html output</h1>
+
+<div class="highlight highlight-source-python"><pre>output <span class="pl-k">=</span> io.open(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span> <span class="pl-k">+</span> args.o, <span class="pl-s"><span class="pl-pds">"</span>w<span class="pl-pds">"</span></span>, <span class="pl-v">encoding</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>utf8<span class="pl-pds">'</span></span>)
+output.write(output_file)
+output.close()</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/joseah/SrcToMarkdown/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/joseah/SrcToMarkdown/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/joseah/SrcToMarkdown"></a> is maintained by <a href="https://github.com/joseah">joseah</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
