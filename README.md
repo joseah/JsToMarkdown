@@ -2,11 +2,11 @@
 
 ## Description
 
-`JStoMarkdown.py`, `PythontoMarkdown.py` and `PerltoMarkdown.py` are scripts which create markdown and html documents using a source code file (`.js`,`.py`, `.pl`).
+`SrctoMarkdown.py` is a script which creates markdown and html documents using a source code file (`.js`,`.py`,`.pl`, `.R`,`.sh`).
 
-All scripts receive two mandatory parameters:
+Two mandatory parameters are requested:
 
-- a script (This script should include between comments all markdown notes, see `js_example.js`. Code does not have to be commented)
+- a script (This script should include between comments all markdown notes, see `SrctoMarkdown.py` file. Code does not have to be commented)
 - output format (html)
 
 And optional parameters:
@@ -17,22 +17,13 @@ And optional parameters:
 ## Usage examples
 
 ```bash
-python JStoMarkdown.py -s js_example.js -o html -c github-markdown.css
+Python SrctoMarkdown.py -s python_example.py  -o html -c github-markdown.css
 ```
-
-```bash
-python PythontoMarkdown.py -s python_example.py -o html -c github-markdown.css 
-```
-
-```bash
-python PerltoMarkdown.py -s perl_example.pl -o html -c github-markdown.css
-```
-
 
 
 ## Notes
 
-- These scripts requires `pandoc` and `pypandoc` wrapper.
+- Requires `pandoc` and `pypandoc` wrapper.
 
 Install `pypandoc` via `pip`:
 
