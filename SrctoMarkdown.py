@@ -247,7 +247,9 @@ parser = argparse.ArgumentParser(description='Gets parameters.')
 parser.add_argument("-s", required=True)
 parser.add_argument("-o", required=True)
 parser.add_argument("-c", required=False)
+parser.add_argument("-md", required=False, action="store_true")
 args = parser.parse_args()
+
 
 #' Get filename and language program
 script_info = args.s.split(".")
@@ -263,7 +265,7 @@ file.close()
 #' Convert script to markdown format 
 
 if extension == "pl":
-    md_doc = format_single_comment(script, extension)
+    md_doc = format_single_comment(script, "perl")
 elif extension == "sh":
     md_doc = format_single_comment(script, "bash")
 elif extension == "R" or extension == "r":
@@ -278,9 +280,10 @@ elif extension == "js":
 md = '\n'.join(md_doc)
 
 #' Write raw markdown file
-md_file = open(filename + ".md", "w")
-md_file.write(''.join(md))
-md_file.close()
+if args.md:
+    md_file = open(filename + ".md", "w")
+    md_file.write(''.join(md))
+    md_file.close()
 
 #' # Convert markdown to output format
 
