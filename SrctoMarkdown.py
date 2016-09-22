@@ -266,7 +266,12 @@ if args.o not in valid_formats:
     print(*valid_formats, sep=", ")
     sys.exit()
 
+#' Validate if input file exists
 
+if not os.path.isfile(args.s):
+    print("ERROR: no '" + args.s + "' exists")
+    sys.exit()
+    
 
 #' Get filename and language program
 script_info = args.s.split(".")
