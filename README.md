@@ -3,7 +3,7 @@
 
 # Description
 
-`SrctoMarkdown.py` takes a script written in **python**, **perl**, **javascript**, **R** or **shell**
+`SrctoMarkdown.py` takes a script written in **python**, **perl**, **java**, **javascript**, **R** or **bash**
 and generates a markdown document with comments processed as markdown text, and code embedded in
 markdown code tags.
 
@@ -120,6 +120,63 @@ Fancy table:
 
 print("This is a hello world in Python 3!!")
 
+#' > Another markdown comment
+
+```
+
+## Java and Javascript
+
+**Java** and **Javascript** share the same way to make comments.
+
+### Single-line comments
+
+Use `//'` pattern.
+
+Example:
+
+```java
+//' This is a comment that will be processed as markdown text.
+//' Another comment.
+
+document.write("You can't see this!");
+
+// This is a single line comment (not processed as markdown).
+```
+
+### Multiple-line comments
+
+Use `/**` and `**/` tags around text.
+
+Example:
+
+```js
+/*
+# Sum function
+**Overview**: Returns the sum of two numbers
+Parameters:
+- a: Numeric variable
+- b: Numeric variable
+## Example
+result=sum(5, 10)
+*/
+
+
+function sum(a, b) {
+    return a + b;
+}
+```
+> Use `/**` and `**/` tags alone in single lines! **Do not include parts of markdown text in the same line**.
+
+Example:
+
+```js
+/* # Sum function
+**Overview**: Returns the sum of two numbers
+Parameters:
+- a: Numeric variable
+- b: Numeric variable
+## Example
+result=sum(5, 10) */
 ```
 
 
