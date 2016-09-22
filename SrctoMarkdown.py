@@ -44,7 +44,7 @@ sudo pip install pypandoc
 | Parameters |                  Description                  |
 |:----------:|:---------------------------------------------:|
 | -s         | script file (with comments in markdown style) |
-| -o         |              output format (html)             |
+| -o         |      output format (html, pdf, rst, ...)      |
 | -c         |                    css file                   |
 | -md        |            Write markdown output              |
 
@@ -296,7 +296,7 @@ else:
 
 
 if args.o != "html":
-    output = pypandoc.convert(filename + ".md", args.o, outputfile = filename + args.o)
+    output = pypandoc.convert(filename + ".md", args.o, outputfile = filename + "." +args.o)
     assert output == ""
 
 #' Remove markdown output file?
