@@ -150,7 +150,7 @@ Use `/**` and `**/` tags around text.
 Example:
 
 ```js
-/*
+/**
 # Sum function
 **Overview**: Returns the sum of two numbers
 Parameters:
@@ -158,7 +158,7 @@ Parameters:
 - b: Numeric variable
 ## Example
 result=sum(5, 10)
-*/
+**/
 
 
 function sum(a, b) {
@@ -170,13 +170,13 @@ function sum(a, b) {
 Example:
 
 ```js
-/* # Sum function
+/** # Sum function
 **Overview**: Returns the sum of two numbers
 Parameters:
 - a: Numeric variable
 - b: Numeric variable
 ## Example
-result=sum(5, 10) */
+result=sum(5, 10) **/
 ```
 
 
