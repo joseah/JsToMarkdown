@@ -254,7 +254,7 @@ args = parser.parse_args()
 
 #' Validate output format
 
-valid_formats= ["asciidoc," "beamer", "commonmark", "context", "docbook", "docx", 
+valid_formats= ["asciidoc", "beamer", "commonmark", "context", "docbook", "docx", 
  "dokuwiki", "dzslides", "epub", "epub3", "fb2", "haddock", "html", "html5", 
  "icml", "json", "latex", "man", "markdown", "markdown_github", "markdown_mmd", 
  "markdown_phpextra", "markdown_strict", "mediawiki", "native", "odt", "opendocument", 
@@ -262,15 +262,13 @@ valid_formats= ["asciidoc," "beamer", "commonmark", "context", "docbook", "docx"
  "tei", "texinfo", "textile"]
  
 if args.o not in valid_formats:
-    print("ERROR: Invalid output format. Expected one of these:")
-    print(*valid_formats, sep=", ")
-    sys.exit()
+    sys.exit("ERROR: Invalid output format. Expected one of these:\n" + 
+    ', '.join(valid_formats))
 
 #' Validate if input file exists
 
 if not os.path.isfile(args.s):
-    print("ERROR: no '" + args.s + "' exists")
-    sys.exit()
+    sys.exit("ERROR: no '" + args.s + "' exists")
     
 
 #' Get filename and language program
