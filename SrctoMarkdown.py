@@ -41,12 +41,13 @@ sudo pip install pypandoc
 # Parameter description
 
 
-| Parameters |                  Description                  |
-|:----------:|:---------------------------------------------:|
-| -s         | script file (with comments in markdown style) |
-| -o         |      output format (html, pdf, rst, ...)      |
-| -c         |                    css file                   |
-| -md        |            Write markdown output              |
+| Parameters |                  Description                   |
+|:----------:|:----------------------------------------------:|
+| -s         | script file (with comments in markdown style)  |
+| -o         |      output format (html, pdf, rst, ...)       |
+| -c         |                    css file                    |
+| -md        |            Write markdown output               |
+| -pandoc    |Path to pandoc. Default `/usr/local/bin/pandoc` |
 
 # Usage example
 
@@ -241,7 +242,6 @@ import sys
 
 #' Set path to pandoc
 import os
-os.environ.setdefault('PYPANDOC_PANDOC', '/usr/local/bin/pandoc')
 
 #' Get parameters 
 parser = argparse.ArgumentParser(description='Gets parameters.')
@@ -249,7 +249,17 @@ parser.add_argument("-s", required=True)
 parser.add_argument("-o", required=True)
 parser.add_argument("-c", required=False)
 parser.add_argument("-md", required=False, action="store_true")
+parser.add_argument("-pandoc", required=False)
+
 args = parser.parse_args()
+
+
+#' Set path to `pandoc`
+
+if args.pandoc:
+    os.environ.setdefault('PYPANDOC_PANDOC', args.pandoc)
+else:
+    os.environ.setdefault('PYPANDOC_PANDOC', '/usr/local/bin/pandoc')
 
 
 #' Validate output format
