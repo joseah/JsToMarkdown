@@ -76,11 +76,15 @@ with this program to any other format.</p>
 </tr>
 <tr>
 <td align="center">-o</td>
-<td align="center">output format (html)</td>
+<td align="center">output format (html, pdf, rst, ...)</td>
 </tr>
 <tr>
 <td align="center">-c</td>
 <td align="center">css file</td>
+</tr>
+<tr>
+<td align="center">-md</td>
+<td align="center">Write markdown output</td>
 </tr>
 </tbody>
 </table>
@@ -88,7 +92,7 @@ with this program to any other format.</p>
 <h1>
 <a id="usage-example" class="anchor" href="#usage-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage example</h1>
 
-<div class="highlight highlight-source-shell"><pre>python SrctoMarkdown.py -s functions.js -o html -c kult.css </pre></div>
+<div class="highlight highlight-source-shell"><pre>python SrctoMarkdown.py -s functions.js -o html -c kult.css -md</pre></div>
 
 <h1>
 <a id="define-functions" class="anchor" href="#define-functions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Define functions</h1>
@@ -316,10 +320,6 @@ comments, multiple-line comments and code tags added to code chunks.</li>
 
 <div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> argparse</pre></div>
 
-<p>Import <code>io</code> to deal with text enconding</p>
-
-<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> io</pre></div>
-
 <p>Import pandoc wrapper</p>
 
 <div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> pypandoc</pre></div>
@@ -335,9 +335,10 @@ os.environ.setdefault(<span class="pl-s"><span class="pl-pds">'</span>PYPANDOC_P
 parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-s<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">True</span>)
 parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-o<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">True</span>)
 parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-c<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+parser.add_argument(<span class="pl-s"><span class="pl-pds">"</span>-md<span class="pl-pds">"</span></span>, <span class="pl-v">required</span><span class="pl-k">=</span><span class="pl-c1">False</span>, <span class="pl-v">action</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>store_true<span class="pl-pds">"</span></span>)
 args <span class="pl-k">=</span> parser.parse_args()</pre></div>
 
-<p>Open output markdown file</p>
+<p>Get filename and language program</p>
 
 <div class="highlight highlight-source-python"><pre>script_info <span class="pl-k">=</span> args.s.split(<span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>)
 filename <span class="pl-k">=</span> script_info[<span class="pl-c1">0</span>]
@@ -351,8 +352,12 @@ script <span class="pl-k">=</span> <span class="pl-v">file</span>.readlines()
 
 <p>Convert script to markdown format </p>
 
-<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>pl<span class="pl-pds">"</span></span> <span class="pl-k">or</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>sh<span class="pl-pds">"</span></span> <span class="pl-k">or</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>R<span class="pl-pds">"</span></span> :
-    md_doc <span class="pl-k">=</span> format_single_comment(script, extension)
+<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>pl<span class="pl-pds">"</span></span>:
+    md_doc <span class="pl-k">=</span> format_single_comment(script, <span class="pl-s"><span class="pl-pds">"</span>perl<span class="pl-pds">"</span></span>)
+<span class="pl-k">elif</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>sh<span class="pl-pds">"</span></span>:
+    md_doc <span class="pl-k">=</span> format_single_comment(script, <span class="pl-s"><span class="pl-pds">"</span>bash<span class="pl-pds">"</span></span>)
+<span class="pl-k">elif</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>R<span class="pl-pds">"</span></span> <span class="pl-k">or</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>r<span class="pl-pds">"</span></span>:
+    md_doc <span class="pl-k">=</span>  format_single_comment(script, <span class="pl-s"><span class="pl-pds">"</span>R<span class="pl-pds">"</span></span>)
 <span class="pl-k">elif</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>py<span class="pl-pds">"</span></span>:
     md_doc <span class="pl-k">=</span> format_multiple_line_comment(script, <span class="pl-s"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>'''#<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>#'''<span class="pl-pds">"</span></span>)
 <span class="pl-k">elif</span> extension <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>js<span class="pl-pds">"</span></span>:
@@ -371,17 +376,23 @@ md_file.close()</pre></div>
 <h1>
 <a id="convert-markdown-to-output-format" class="anchor" href="#convert-markdown-to-output-format" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Convert markdown to output format</h1>
 
-<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> args.c:
-    output_file <span class="pl-k">=</span> pypandoc.convert_text(md, args.o, <span class="pl-v">format</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>md<span class="pl-pds">"</span></span>, <span class="pl-v">extra_args</span><span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">'</span>-c<span class="pl-pds">'</span></span> <span class="pl-k">+</span> args.c, <span class="pl-s"><span class="pl-pds">'</span>--toc<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>-N<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>--self-contained<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>--standalone<span class="pl-pds">'</span></span>])
+<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> args.c <span class="pl-k">and</span> args.o <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>html<span class="pl-pds">"</span></span>:
+    pandoc_args<span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">'</span>-c<span class="pl-pds">'</span></span> <span class="pl-k">+</span> args.c, <span class="pl-s"><span class="pl-pds">'</span>--toc<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>-N<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>--self-contained<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>--standalone<span class="pl-pds">'</span></span>]
+
+    output <span class="pl-k">=</span> pypandoc.convert(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.md<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">'</span>html<span class="pl-pds">'</span></span>, <span class="pl-v">outputfile</span> <span class="pl-k">=</span> filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>.html<span class="pl-pds">'</span></span>, 
+                              <span class="pl-v">extra_args</span> <span class="pl-k">=</span> pandoc_args)
+    <span class="pl-k">assert</span> output <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>
 <span class="pl-k">else</span>:
-    output_file <span class="pl-k">=</span> pypandoc.convert_text(md, args.o, <span class="pl-v">format</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>md<span class="pl-pds">"</span></span>)</pre></div>
+    output <span class="pl-k">=</span> pypandoc.convert(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.md<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">'</span>html<span class="pl-pds">'</span></span>, <span class="pl-v">outputfile</span> <span class="pl-k">=</span> filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>.html<span class="pl-pds">'</span></span>)
+    <span class="pl-k">assert</span> output <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>
+<span class="pl-k">if</span> args.o <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>html<span class="pl-pds">"</span></span>:
+    output <span class="pl-k">=</span> pypandoc.convert(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.md<span class="pl-pds">"</span></span>, args.o, <span class="pl-v">outputfile</span> <span class="pl-k">=</span> filename <span class="pl-k">+</span> args.o)
+    <span class="pl-k">assert</span> output <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span></pre></div>
 
-<h1>
-<a id="write-html-output" class="anchor" href="#write-html-output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Write html output</h1>
+<p>Remove markdown output file?</p>
 
-<div class="highlight highlight-source-python"><pre>output <span class="pl-k">=</span> io.open(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span> <span class="pl-k">+</span> args.o, <span class="pl-s"><span class="pl-pds">"</span>w<span class="pl-pds">"</span></span>, <span class="pl-v">encoding</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>utf8<span class="pl-pds">'</span></span>)
-output.write(output_file)
-output.close()</pre></div>
+<div class="highlight highlight-source-python"><pre><span class="pl-k">if</span> <span class="pl-k">not</span> args.md:
+    os.remove(filename <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>.md<span class="pl-pds">"</span></span>)</pre></div>
         </section>
 
         <aside id="sidebar">
