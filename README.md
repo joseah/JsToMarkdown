@@ -1,29 +1,27 @@
-# Src2markdown
 
-## Description
+# Src2Markdown
 
-`SrctoMarkdown.py` is a script which creates markdown and html documents using a source code file (`.js`,`.py`,`.pl`, `.R`,`.sh`).
+# Description
 
-Two mandatory parameters are requested:
+`SrctoMarkdown.py` takes a script written in **python**, **perl**, **javascript**, **R** or **shell**
+and generates a markdown document with comments processed as markdown text, and code embedded in
+markdown code tags.
 
-- a script (This script should include between comments all markdown notes, see `SrctoMarkdown.py` file. Code does not have to be commented)
-- output format (html)
-
-And optional parameters:
-
-- css
+The output file is then converted into html, pdf, and other output formats supported by `Pandoc`.
 
 
-## Usage examples
+# Requirements
 
-```bash
-Python SrctoMarkdown.py -s python_example.py  -o html -c github-markdown.css
-```
+## Pandoc
 
+This program requires [Pandoc](http://pandoc.org/) to convert the markdown output generated
+with this program to any other format.
 
-## Notes
+Download Pandoc from the [installing webpage](http://pandoc.org/installing.html). 
 
-- Requires `pandoc` and `pypandoc` wrapper.
+## pypandoc
+
+In order to use pandoc within python, pypandoc wrapper is required.
 
 Install `pypandoc` via `pip`:
 
@@ -31,8 +29,33 @@ Install `pypandoc` via `pip`:
 sudo pip install pypandoc
 ```
 
-- See [marked style](http://markedstyle.com/) for more css files
+> See [pip webpage](https://pip.pypa.io/en/stable/installing/) if you do not use `pip` yet
 
-## Contributors
+
+# Parameter description
+
+
+| Parameters |                  Description                   | Mandatory? |
+|:----------:|:----------------------------------------------:|:----------:|
+| -s         | script file (with comments in markdown style)  |Yes         |
+| -o         |      output format (html, pdf, rst, ...)       |Yes         |
+| -c         |                    css file                    |No          |
+| -md        |            Write markdown output?              |No          |
+| -pandoc    |Path to pandoc. Default `/usr/local/bin/pandoc` |No          |
+
+# Usage example
+
+```shell
+python SrctoMarkdown.py -s functions.js -o html -c kult.css
+```
+
+Creates an html report for `functions.js`. A CSS file is used to give style to html output file.
+
+
+# Notes
+
+This program is humbly inspired by the awesome work on Knitr by **Yihui Xie** and Rmarkdown by **JJ Allaire**.
+
+# Contributors
 
 - José Alquicira Hernández
