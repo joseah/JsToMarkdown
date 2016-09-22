@@ -82,10 +82,37 @@ print "Hello world in Perl!";
 ```
 
 
-## Python, Java
+## Python
 
 
+**Python** uses single-line and multiple-line comments.   
 
+### Single-line comments 
+
+For single-line comments, same rules mentioned for **Perl**, **Bash** and **R**.
+
+### Multiple-line comments
+
+Multiple-line comments are possible in **Python** using the `'''` pattern around text.  
+In order to use markdown comments, use `'''#` and `#'''` tags around text.
+
+Example: 
+
+```python
+'''#
+# Outstandingn title
+
+This is a text formatted in **markdown**.
+This text embedded in special tags to indicate it will be
+processed as markdown text.
+
+
+```python
+print("This is a hello world in Python 3!!")
+```
+
+#'''
+```
 
 
 # Notes
