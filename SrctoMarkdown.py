@@ -281,20 +281,27 @@ elif extension == "js":
 md = '\n'.join(md_doc)
 
 #' Write raw markdown file
-if args.md:
-    md_file = open(filename + ".md", "w")
-    md_file.write(''.join(md))
-    md_file.close()
+md_file = open(filename + ".md", "w")
+md_file.write(''.join(md))
+md_file.close()
 
 #' # Convert markdown to output format
 
-if args.c:
-    output_file = pypandoc.convert_text(md, args.o, format = "md", extra_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone'])
+if args.c and args.o == "html":
+    pandoc_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone']
+    
+    output = pypandoc.convert(filename + ".md", 'html', outputfile = filename + '.html', 
+                              extra_args = pandoc_args)
+    assert output == ""
 else:
-    output_file = pypandoc.convert_text(md, args.o, format = "md")
+    output = pypandoc.convert(filename + ".md", 'html', outputfile = filename + '.html')
+    assert output == ""
 
 
-#' # Write html output
-output = io.open(filename + "." + args.o, "w", encoding='utf8')
-output.write(output_file)
-output.close()
+if args.o != "html":
+    output = pypandoc.convert(filename + ".md", args.o, outputfile = filename + args.o)
+    assert output == ""
+
+#' Remove markdown output file?
+if not args.md:
+    os.remove(filename + ".md")
