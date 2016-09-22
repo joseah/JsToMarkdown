@@ -100,16 +100,15 @@ Example:
 
 ```python
 '''#
-# Outstandingn title
+# Outstanding title
 
 This is a text formatted in **markdown**.
 This text embedded in special tags to indicate it will be
 processed as markdown text.
 
 
-```python
 print("This is a hello world in Python 3!!")
-```
+
 
 #'''
 ```
