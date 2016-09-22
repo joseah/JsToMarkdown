@@ -46,11 +46,12 @@ sudo pip install pypandoc
 | -s         | script file (with comments in markdown style) |
 | -o         |              output format (html)             |
 | -c         |                    css file                   |
+| -md        |            Write markdown output              |
 
 # Usage example
 
 ```shell
-python SrctoMarkdown.py -s functions.js -o html -c kult.css 
+python SrctoMarkdown.py -s functions.js -o html -c kult.css -md
 ```
 
 #'''
