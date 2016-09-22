@@ -233,9 +233,6 @@ import re
 #' Import `argparse` to handle command-line arguments
 import argparse
 
-#' Import `io` to deal with text enconding
-import io
-
 #' Import pandoc wrapper
 import pypandoc
 
