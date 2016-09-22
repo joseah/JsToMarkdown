@@ -236,6 +236,9 @@ import argparse
 #' Import pandoc wrapper
 import pypandoc
 
+#' Import `sys` library
+import sys
+
 #' Set path to pandoc
 import os
 os.environ.setdefault('PYPANDOC_PANDOC', '/usr/local/bin/pandoc')
@@ -247,6 +250,22 @@ parser.add_argument("-o", required=True)
 parser.add_argument("-c", required=False)
 parser.add_argument("-md", required=False, action="store_true")
 args = parser.parse_args()
+
+
+#' Validate output format
+
+valid_formats= ["asciidoc," "beamer", "commonmark", "context", "docbook", "docx", 
+ "dokuwiki", "dzslides", "epub", "epub3", "fb2", "haddock", "html", "html5", 
+ "icml", "json", "latex", "man", "markdown", "markdown_github", "markdown_mmd", 
+ "markdown_phpextra", "markdown_strict", "mediawiki", "native", "odt", "opendocument", 
+ "opml", "org", "pdf", "plain", "revealjs", "rst", "rtf", "s5", "slideous", "slidy", 
+ "tei", "texinfo", "textile"]
+ 
+if args.o not in valid_formats:
+    print("ERROR: Invalid output format. Expected one of these:")
+    print(*valid_formats, sep=", ")
+    sys.exit()
+
 
 
 #' Get filename and language program
