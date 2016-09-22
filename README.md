@@ -107,10 +107,19 @@ This text embedded in special tags to indicate it will be
 processed as markdown text.
 
 
-print("This is a hello world in Python 3!!")
+Fancy table:
+
+| X | Y |
+|:-:|--:|
+| 1 | 2 |
+| 3 | 4 |
+| 5 | 8 |
 
 
 #'''
+
+print("This is a hello world in Python 3!!")
+
 ```
 
 
