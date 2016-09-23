@@ -15,3 +15,27 @@ src2md.sublime-project
 .DS_Store
 
 Documentation/one-line_comment_algorithm.png
+
+*.plain
+
+*.pdf
+
+*.mediawiki
+
+*.man
+
+*.json
+
+*.html5
+
+*.epub
+
+*.docx
+
+*.docbook
+
+*.rst
+
+*.rtf
+
+*.slidy
