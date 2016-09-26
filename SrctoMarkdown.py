@@ -307,7 +307,8 @@ elif extension == "py":
     md_doc = format_multiple_line_comment(script, "python", "'''#", "#'''")
 elif extension == "js":
     md_doc = format_multiple_line_comment(script, "js", "/**", "**/")
-
+elif extension == "java":
+    md_doc = format_multiple_line_comment(script, "java", "/**", "**/")
 
 #' Join list of lines
 md = '\n'.join(md_doc)
