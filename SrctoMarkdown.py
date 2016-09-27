@@ -306,9 +306,9 @@ elif extension == "R" or extension == "r":
 elif extension == "py":
     md_doc = format_multiple_line_comment(script, "python", "'''#", "#'''")
 elif extension == "js":
-    md_doc = format_multiple_line_comment(script, "js", "/**", "**/")
+    md_doc = format_multiple_line_comment(script, "js", "/\*\*", "\*\*/")
 elif extension == "java":
-    md_doc = format_multiple_line_comment(script, "java", "/**", "**/")
+    md_doc = format_multiple_line_comment(script, "java", "/\*\*", "\*\*/")
 
 #' Join list of lines
 md = '\n'.join(md_doc)
@@ -323,16 +323,16 @@ md_file.close()
 if args.c and args.o == "html":
     pandoc_args=['-c' + args.c, '--toc', '-N', '--self-contained', '--standalone']
     
-    output = pypandoc.convert(filename + ".md", 'html', outputfile = filename + '.html', 
+    output = pypandoc.convert_file(filename + ".md", 'html', outputfile = filename + '.html', 
                               extra_args = pandoc_args)
     assert output == ""
 else:
-    output = pypandoc.convert(filename + ".md", 'html', outputfile = filename + '.html')
+    output = pypandoc.convert_file(filename + ".md", 'html', outputfile = filename + '.html')
     assert output == ""
 
 
 if args.o != "html":
-    output = pypandoc.convert(filename + ".md", args.o, outputfile = filename + "." +args.o)
+    output = pypandoc.convert_file(filename + ".md", args.o, outputfile = filename + "." +args.o)
     assert output == ""
 
 #' Remove markdown output file?
