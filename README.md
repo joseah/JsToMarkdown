@@ -17,8 +17,10 @@ The output file is then converted into html, pdf, and other output formats suppo
 This program requires [Pandoc](http://pandoc.org/) to convert the markdown output generated
 with this program to any other format.
 
-Download Pandoc from the [installing webpage](http://pandoc.org/installing.html). 
+Download Pandoc from the [installing webpage](http://pandoc.org/installing.html).
 
+**`SrctoMarkdown.py` is implemented under pypandoc version `1.17.0.2`**
+ 
 ## pypandoc
 
 In order to use pandoc within python, pypandoc wrapper is required.
@@ -31,6 +33,7 @@ sudo pip install pypandoc
 
 > See [pip webpage](https://pip.pypa.io/en/stable/installing/) if you do not use `pip` yet
 
+**`SrctoMarkdown.py` is implemented under pypandoc version `1.2.0`**
 
 # Parameter description
 
