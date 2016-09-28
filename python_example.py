@@ -11,7 +11,7 @@
   |:----------:|:---------------------------------------------:|
   | 1st        | relationship file (id and region)             |
   | 2nd        |              `.evec` file                     |
-  '''
+  '''#
 
 
 '''#
@@ -19,7 +19,7 @@
 - Relationship file is built using ids from PLINK file and population metadata
 - `.evec` file is obtained running a PCA usig `smartPCA`
 
-'''
+#'''
 
 
 
