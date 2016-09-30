@@ -19,7 +19,7 @@ with this program to any other format.
 
 Download Pandoc from the [installing webpage](http://pandoc.org/installing.html).
 
-**`SrctoMarkdown.py` is implemented under pypandoc version `1.17.0.2`**
+**`SrctoMarkdown.py` is implemented under Pandoc version `1.17.0.2`**
  
 ## pypandoc
 
