@@ -6,12 +6,17 @@
 #' ---
 
 
-  '''#
-  | Parameters |                  Description                  |
-  |:----------:|:---------------------------------------------:|
-  | 1st        | relationship file (id and region)             |
-  | 2nd        |              `.evec` file                     |
-  '''#
+#' # Description 
+#' 
+#' This program takes a brelationship and `.evec` file (output from smartPCA) in order to set regions to each individual.
+
+
+'''#
+| Parameters |                  Description                  |
+|:----------:|:---------------------------------------------:|
+| 1st        | relationship file (id and region)             |
+| 2nd        |              `.evec` file                     |
+#'''
 
 
 '''#
@@ -30,21 +35,7 @@
 #' ```
 #'
 
-#' # Description 
-#' 
-#' This program takes both relationship and `.evec` file in order to set regions to each individual and get a tab-separated file
-
-'''
-# Open file via a connection
-rs = open(data, 'r')
-for l in rs:
-        l = l.rstrip('\n')
-        l = l.rsplit('\t')
-        eth[l[0]] = l[1] + '\t' + l[2]
-rs.close()
-'''
-
-
+#' # Code starts
 
 # Import `sys` library for managing command parameters
 import sys
