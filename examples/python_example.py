@@ -9,7 +9,7 @@
 #' # Description 
 #' 
 #' This program takes a brelationship and `.evec` file (output from smartPCA) in order to set regions to each individual.
-
+#'
 
 '''#
 | Parameters |                  Description                  |
