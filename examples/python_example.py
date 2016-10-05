@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 #' ---
 #' title:        set-region.py
 #' author:       Jose Alquicira Hernandez
