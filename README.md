@@ -17,7 +17,8 @@ And this is the output:
 
 ![](examples/image_output.png)
 
-See below for more details.
+See below for more details.  
+You can see more examples on [this repository](https://github.com/joseah/SrcToMarkdown/tree/master/examples)
 
 # Requirements
 
