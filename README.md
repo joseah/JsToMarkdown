@@ -9,6 +9,15 @@ markdown code tags.
 
 The output file is then converted into html, pdf, and other output formats supported by `Pandoc`.
 
+This is an example of a script:
+
+![](examples/image_input.png)
+
+And this is the output:
+
+![](examples/image_output.png)
+
+See below for more details.
 
 # Requirements
 
