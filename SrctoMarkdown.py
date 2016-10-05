@@ -73,6 +73,7 @@ the script file. All items are order according to original script.
 |:----------:|:---------------------------------------------------------:|
 | script     |     list corresponding to script file                     |
 | lang       | programming language tag: python, perl, shell, javascript |
+| s_tag      |              single comment tag                           |
 
 
 ### Usage example 
@@ -88,13 +89,13 @@ and code tags added to code chunks.
 
 #'''
 
-def format_single_comment(script, lang):
+def format_single_comment(script, lang, s_tag):
     md = []
     prev_line_code = False
     
     for l in script:
         l = l.strip('\n')
-        md_comm = re.match("#'", l)
+        md_comm = re.match(s_tag, l)
         
         # Currrent line is a comment
         if md_comm != None:
@@ -103,7 +104,7 @@ def format_single_comment(script, lang):
                 md.append("```\n")
             # Previous line was not code
             if l != '':
-                l_format = re.sub("#'\s*", '', l)
+                l_format = re.sub(s_tag + "\s*", '', l)
                 md.append(l_format)
             
         # Current line is not a comment        
@@ -184,6 +185,7 @@ the script file. All items are ordered according to original script.
 | lang       | programming language tag: python, perl, shell, javascript |
 | comment_tag_start | Tag to indicate markdown multiple-line comment start(\'\'\'# or /*) |
 | comment_tag_end | Tag to indicate markdown multiple-line comment end (#\'\'\' or */) |
+| comment_single | Tag to indicate markdown sinle-line comment  |
 
 ### Usage example 
 
@@ -201,7 +203,7 @@ comments, multiple-line comments and code tags added to code chunks.
 
 
 def format_multiple_line_comment(script, lang, 
-                                 comment_tag_start, comment_tag_end):
+                                 comment_tag_start, comment_tag_end, comment_single):
 
     markdown = []
     script_split = group(script, comment_tag_start)
@@ -214,11 +216,11 @@ def format_multiple_line_comment(script, lang,
 
             
             res_2 = [x for x in i[1] if  re.match(comment_tag_end, x) == None]
-            res_2 = format_single_comment(res_2, lang)
+            res_2 = format_single_comment(res_2, lang, comment_single)
             markdown.extend(res_2)
             
         else:
-            res_3 = format_single_comment(i[0], lang)
+            res_3 = format_single_comment(i[0], lang, comment_single)
             markdown.extend(res_3)
     
     return(markdown)
@@ -298,17 +300,17 @@ file.close()
 #' Convert script to markdown format 
 
 if extension == "pl":
-    md_doc = format_single_comment(script, "perl")
+    md_doc = format_single_comment(script, "perl", "#'")
 elif extension == "sh":
-    md_doc = format_single_comment(script, "bash")
+    md_doc = format_single_comment(script, "bash", "#'")
 elif extension == "R" or extension == "r":
-    md_doc =  format_single_comment(script, "R")
+    md_doc =  format_single_comment(script, "R", "#'")
 elif extension == "py":
-    md_doc = format_multiple_line_comment(script, "python", "'''#", "#'''")
+    md_doc = format_multiple_line_comment(script, "python", "'''#", "#'''", "#'")
 elif extension == "js":
-    md_doc = format_multiple_line_comment(script, "js", "/\*\*", "\*\*/")
+    md_doc = format_multiple_line_comment(script, "js", "/\*\*", "\*\*/", "//'")
 elif extension == "java":
-    md_doc = format_multiple_line_comment(script, "java", "/\*\*", "\*\*/")
+    md_doc = format_multiple_line_comment(script, "java", "/\*\*", "\*\*/", "//'")
 
 #' Join list of lines
 md = '\n'.join(md_doc)
