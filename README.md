@@ -59,7 +59,7 @@ sudo pip install pypandoc
 # Usage example
 
 ```shell
-python SrctoMarkdown.py -s functions.js -o html -c kult.css
+python SrctoMarkdown.py -s functions.js -o html -c github.css
 ```
 
 Creates an html report for `functions.js`. A CSS file is used to give style to html output file.
