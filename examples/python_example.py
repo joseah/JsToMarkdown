@@ -6,7 +6,7 @@
 
 #' # Description 
 #' 
-#' This program takes a brelationship and `.evec` file (output from smartPCA) in order to set regions to each individual.
+#' This program takes a relationship and `.evec` file (output from smartPCA) in order to set regions to each individual.
 #'
 
 '''#
