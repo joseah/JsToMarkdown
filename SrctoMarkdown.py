@@ -288,8 +288,10 @@ if args.c:
 
 #' Get filename and language program
 script_info = args.s.split(".")
-filename = script_info[0]
-extension = script_info[1]
+ext_pos = len(script_info) - 1
+filename = '.'.join(script_info[0:ext_pos])
+extension = script_info[len(script_info) - 1]
+
 
 
 #' Open file
